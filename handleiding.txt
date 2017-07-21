@@ -1,0 +1,16 @@
+
+Installeer Django:
+
+$ pip install django
+
+Run alle migrations.
+Maak nu een admin gebruiker aan.
+Ga naar de pagina ... en genereer de grote lijst met stemmers.
+Print deze lijst uit, knip/snij in stukken en vouw deze dicht zodat je niet kunt
+zien aan wie je ze uitdeelt.
+
+Zet nu de vragen klaar. Als je zover bent, zet je een vraag open.
+Mensen kunnen nu stemmen.
+Zet hierna de poll dicht. Iedereen kan nu de resultaten bekijken.
+Oude stemmingen zijn altijd te bekijken.
+
