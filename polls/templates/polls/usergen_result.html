@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <p>Aangemaakte gebruikers</p>
+    <table>
+        <tr><th>Gebruikersnaam</th><th>Wachtwoord</th></tr>
+        {% for u in users %}
+            <tr><td>{{ u.username }}</td><td>{{ u.password }}</td></tr>
+        {% endfor %}
+    </table>
+    <p><a href="{% url 'polls:usergen' %}">Meer gebruikers aanmaken</a></p>
+{% endblock %}

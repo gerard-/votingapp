@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User, Group
 
 from .models import Question, Choice, Answer
 
@@ -23,6 +25,13 @@ class QuestionAdmin(admin.ModelAdmin):
         ChoiceInline,
     ]
     actions = [copy_question]
+    
+class MyUserAdmin(UserAdmin):    
+    list_display = ['username', 'is_staff', 'is_superuser']
 
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Answer)
+
+admin.site.unregister(Group)
+admin.site.unregister(User)
+admin.site.register(User, MyUserAdmin)

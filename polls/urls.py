@@ -11,4 +11,7 @@ urlpatterns = [
     url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/polls/login'}, name='logout'),
+
+    url(r'^usergen/$', views.usergen, name='usergen'),
+    url(r'^usergen/generate/$', views.usergen_generate, name='usergen_generate'),
 ]

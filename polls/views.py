@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import re
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
@@ -10,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
+from django.contrib.auth.models import User
 from .models import Question, Answer, Choice
 
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -63,3 +66,41 @@ def vote(request, question_id):
     # with POST data. This prevents data from being posted twice if a
     # user hits the Back button.
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+@login_required
+def usergen(request):
+    if not request.user.is_superuser:
+        return render(request, 'polls/usergen.html', {
+                    'error_message': "U bent geen admin",
+                })
+    return render(request, 'polls/usergen.html')
+
+@login_required
+def usergen_generate(request):
+    if not request.user.is_superuser:
+        return render(request, 'polls/usergen.html', {
+                    'error_message': "U bent geen admin",
+                })
+    # See what the highest "voter id" is
+    highest = None
+    for user in User.objects.all():
+        try:
+            value = int(user.username)
+            if highest == None or value > highest:
+                highest = value
+        except (ValueError):
+            pass
+            
+    count=int(request.POST['count'])
+    result = []
+    for i in xrange(highest+1, highest+1+count):
+        username=str(i)
+        password = User.objects.make_random_password(length=12, allowed_chars="0123456789")
+        u = User.objects.create_user(username=username, password=password)
+        password = re.sub(r"([0-9][0-9][0-9])", r"\1 ", password)
+        result.append({"username":username,"password":password})
+    
+    return render(request, 'polls/usergen_result.html', {
+                'error_message': "Gebruikers aangemaakt",
+                'users': result
+            })

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <p>Gebruikers aanmaken</p>
+    <form action="{% url 'polls:usergen_generate' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="count" id="count" value="" />
+    <label for="count">aantal</label><br />
+    <input type="submit" value="Aanmaken" />
+    </form>
+{% endblock %}
