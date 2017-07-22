@@ -11,7 +11,19 @@
         <strong>{{ question.question_text }}</strong>
     </p>
 
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ error_message }}</strong>
+        </div>
+    {% endif %}
+    
+    {% if user_voted %}
+        <div class="alert alert-info" role="alert">
+            <strong>U heeft al gestemd.</strong>
+            <a href="{% url 'polls:results' question.id %}" class="btn btn-primary">Naar resultaten</a>
+            <br>
+        </div>
+    {% endif %}
 
     <em>Maak uw keuze:</em>
     <form action="{% url 'polls:vote' question.id %}" method="post" class="form">
@@ -26,4 +38,7 @@
         </div>
         <input type="submit" value="Stem uitbrengen" class="btn btn-lg btn-danger btn-block" style="margin-top:1em;"/>
     </form>
+    <br>
+    <a href="{% url 'polls:cancel_vote' question.id %}" class="btn btn-default btn-block">Ik onthoud mij van stemmen</a>
+    <p><br><em>U kunt tot de stemming sluit zo vaak als u wilt een stem uitbrengen. Deze vervangt steeds uw vorige stem.</em></p>
 {% endblock %}

@@ -9,7 +9,7 @@
 {% block content %}
     <ol class="breadcrumb">
       <li><a href="{% url 'polls:index' %}">Overzicht</a></li>
-        {% if question.question_open %}
+        {% if question.question_open and not request.user.is_staff %}
             <li><a href="{% url 'polls:detail' question.id %}">Stemmen</a></li>
         {% else %}
             <li>Stemmen</li>
@@ -30,8 +30,8 @@
                     <a href="{% url 'polls:detail' question.id %}" class="btn btn-warning">Stem aanpassen</a>
                 </div>
             {% else %}
-                <div class="alert alert-danger" role="alert"><strong>U niet gestemd.</strong>
-                    <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary">Stemmen</a>
+                <div class="alert alert-danger" role="alert"><strong>U heeft niet gestemd.</strong>
+                    <a href="{% url 'polls:detail' question.id %}" class="btn btn-danger">Stemmen</a>
                 </div>
             {% endif %}
         {% endif %}        
@@ -48,6 +48,16 @@
             </table>
         </p>        
     {% else %}
+        {% if not request.user.is_staff %}
+            {% if user_voted %}
+                <div class="alert alert-success" role="alert">
+                    <strong>U heeft gestemd.</strong>
+                </div>
+            {% else %}
+                <div class="alert alert-danger" role="alert"><strong>U heeft niet gestemd.</strong>
+                </div>
+            {% endif %}
+        {% endif %}      
         <p>De stemming is gesloten. Dit zijn de resultaten:</p>
         <table class="table">
             <tr><th>Keuze</th><th>Stemmen</th></tr>

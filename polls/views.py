@@ -43,6 +43,10 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        context['user_voted'] = Answer.objects.filter(user=self.request.user,question=context['question']).exists()
+        return context
 
 class ResultsView(LoginRequiredMixin, generic.DetailView):
     model = Question
@@ -87,6 +91,18 @@ def vote(request, question_id):
     # Always return an HttpResponseRedirect after successfully dealing
     # with POST data. This prevents data from being posted twice if a
     # user hits the Back button.
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    
+@login_required
+def cancel_vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if not question.question_open:
+        return render(request, 'polls/detail.html', {
+                    'question': question,
+                    'error_message': "De stemming is gesloten",
+                })
+    # Remove previous answer
+    Answer.objects.filter(user=request.user, question=question).delete()
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 @login_required
