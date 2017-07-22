@@ -8,16 +8,16 @@ from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 
-from .models import Question
+from .models import Question, Answer
 
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+        return Question.objects.all() # FIXME
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Question
@@ -41,6 +41,11 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
+        
+        # Add the answer
+        a = Answer(user=request.user, question=question, choice=selected_choice)
+        a.save()
+
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
