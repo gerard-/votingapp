@@ -6,6 +6,7 @@ $ pip install django
 Run alle migrations.
 Maak nu een admin gebruiker aan.
 Ga naar de pagina ... en genereer de grote lijst met stemmers.
+Deze stemmers hebben een nummer en een authenticatiecode (wachtwoord)
 Print deze lijst uit, knip/snij in stukken en vouw deze dicht zodat je niet kunt
 zien aan wie je ze uitdeelt.
 
