@@ -1,14 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <ol class="breadcrumb">
+      <li><a href="{% url 'polls:index' %}">Overzicht</a></li>
+      <li class="active">Logins aanmaken</li>
+    </ol>            
 
-    <h2>Nieuwe gebruikers aanmaken</h2>
-    <p>U kunt hier gebruikers aanmaken. Deze krijgen een nummer als gebruikersnaam.
-    Op de resultaatpagina kunt u de lijst met gebruikersnamen en wachtwoorden bekijken.</p>
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ error_message }}</strong>
+        </div>
+    {% endif %}
+
+    <h2>Logins aanmaken</h2>
+    <p>U kunt hier logins aanmaken. Op de resultaatpagina kunt u de lijst met gebruikersnamen en wachtwoorden bekijken.</p>
     <form action="{% url 'polls:usergen_generate' %}" method="post">
     {% csrf_token %}
-    <input class="form-control" type="text" name="count" id="count" value="" placeholder="Aantal" />
+    <input class="form-control" type="text" name="count" id="count" value="1" placeholder="Aantal" />
     <label class="sr-only" for="count">aantal</label><br />
     <input class="btn btn-lg btn-primary btn-block" type="submit" value="Aanmaken" />
     </form>

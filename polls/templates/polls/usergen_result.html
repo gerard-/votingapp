@@ -1,14 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <ol class="breadcrumb">
+      <li><a href="{% url 'polls:index' %}">Overzicht</a></li>
+      <li><a href="{% url 'polls:usergen' %}">Logins aanmaken</a></li>
+      <li class="active">Resultaat</li>
+    </ol>
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ error_message }}</strong>
+        </div>
+    {% endif %}
 
-    <p>Aangemaakte gebruikers</p>
+    <h2>Aangemaakte logins</h2>
     <table class="table">
         <tr><th>Gebruikersnaam</th><th>Wachtwoord</th></tr>
         {% for u in users %}
             <tr><td>{{ u.username }}</td><td>{{ u.password }}</td></tr>
         {% endfor %}
     </table>
-    <p><a href="{% url 'polls:usergen' %}">Meer gebruikers aanmaken</a></p>
+    <a class="btn btn-primary btn-block" href="{% url 'polls:usergen' %}">Klaar</a>
 {% endblock %}

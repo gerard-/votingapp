@@ -4,8 +4,19 @@
     <ol class="breadcrumb">
       <li class="active">Overzicht</li>
     </ol>
-    {% if request.user.is_staff %}
-        <p>Ingelogd als organisator</p>
+    {% if request.user.is_superuser %}
+        <div class="alert alert-info" role="alert">
+            <strong>Ingelogd als superuser</strong>
+        </div>
+        <h2>Beheer</h2>
+        <a class="btn btn-default btn-block" href="/admin/">Beheersysteem</a>
+        <a class="btn btn-default btn-block" href="{% url 'polls:usergen' %}">Logins aanmaken</a>
+    {% else %}
+        {% if request.user.is_staff %}
+            <div class="alert alert-info" role="alert">
+                <strong>Ingelogd als organisator</strong>
+            </div>
+        {% endif %}
     {% endif %}
     {% if open_not_voted_questions %}
         <h2>Stemmen</h2>

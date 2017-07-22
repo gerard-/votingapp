@@ -139,6 +139,5 @@ def usergen_generate(request):
         result.append({"username":username,"password":password})
     
     return render(request, 'polls/usergen_result.html', {
-                'error_message': "Gebruikers aangemaakt",
                 'users': result
             })
