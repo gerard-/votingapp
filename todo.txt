@@ -1,6 +1,9 @@
 TODO
 - Kopieren van questions (zodat er makkelijk mensen kunnen afvallen)
-- Login systeem met genereren van gebruikers
+- Genereren van gebruikers
+- Zorgen dat alleen echte kiezers kunnen stemmen
+- Gelikte skin voor de interface
+- Testen op mobiele telefoon
 
 DONE
 - Openen en sluiten van questions
