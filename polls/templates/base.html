@@ -9,6 +9,7 @@
         {% block content %}
         {% endblock %}
         <br>
-        <a href="/polls/logout">logout</a>
+        <p><a href="{% url 'polls:index' %}">Overzicht van alle stemmingen</a></p>
+        <p><a href="/polls/logout">Uitloggen</a></p>
     </body>
 <html>

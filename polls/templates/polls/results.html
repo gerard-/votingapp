@@ -2,12 +2,18 @@
 
 {% block content %}
     <h1>{{ question.question_text }}</h1>
-
-    <ul>
-    {% for choice in question.choice_set.all %}
-        <li>{{ choice.choice_text }} -- {{ choice.answer_set.count }}</li>
-    {% endfor %}
-    </ul>
-
-    <a href="{% url 'polls:detail' question.id %}">Keuze aanpassen</a>
+    
+    {% if question.question_open %}
+        <p>De stemming staat op dit moment open. Nadat deze gesloten is kunt u hier
+        de resultaten zien.</p>
+        <p>Aantal uitgebrachte stemmen: {{ question.answer_set.count }}</p>
+        <p><a href="{% url 'polls:detail' question.id %}">Keuze aanpassen</a></p>
+    {% else %}
+        <p>De stemming is gesloten. Dit zijn de resultaten:</p>
+        <ul>
+        {% for choice in question.choice_set.all %}
+            <li>{{ choice.choice_text }} -- {{ choice.answer_set.count }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}
