@@ -42,6 +42,9 @@ def vote(request, question_id):
         selected_choice.votes += 1
         selected_choice.save()
         
+        # Remove previous answer
+        Answer.objects.filter(user=request.user, question=question).delete()
+        
         # Add the answer
         a = Answer(user=request.user, question=question, choice=selected_choice)
         a.save()
