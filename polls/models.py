@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 class Question(models.Model):
-    question_text = models.CharField("Tekst", max_length=200)
+    question_text = models.CharField("Tekst", max_length=2000)
     question_visible = models.BooleanField("Zichtbaar", default=False)
     question_open = models.BooleanField("Open", default=False)
     
@@ -21,7 +21,7 @@ class Question(models.Model):
     
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField("Tekst",max_length=200)
+    choice_text = models.CharField("Tekst",max_length=2000)
 
     def __str__(self):
         return self.choice_text
