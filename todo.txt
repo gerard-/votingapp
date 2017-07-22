@@ -1,5 +1,4 @@
 TODO
-- Gelikte skin voor de interface
 - Testen op mobiele telefoon
 
 DONE
@@ -8,3 +7,4 @@ DONE
 - Kopieren van questions (zodat er makkelijk mensen kunnen afvallen)
 - Zorgen dat alleen echte kiezers kunnen stemmen
 - Genereren van gebruikers
+- Gelikte skin voor de interface
