@@ -6,10 +6,12 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from .models import Question
 
-class IndexView(generic.ListView):
+class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
@@ -17,14 +19,15 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Question.objects.order_by('-pub_date')[:5]
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
 
-class ResultsView(generic.DetailView):
+class ResultsView(LoginRequiredMixin, generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
+@login_required
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
