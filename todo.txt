@@ -1,5 +1,6 @@
 TODO
 - Testen op mobiele telefoon
+- Aangeven dat de stem goed is doorgekomen
 
 DONE
 - Openen en sluiten van questions
