@@ -25,6 +25,7 @@ class QuestionAdmin(admin.ModelAdmin):
         ChoiceInline,
     ]
     actions = [copy_question]
+    list_display = ['question_text', 'question_visible', 'question_open']
     
 class MyUserAdmin(UserAdmin):    
     list_display = ['username', 'is_staff', 'is_superuser']

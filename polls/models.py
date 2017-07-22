@@ -8,20 +8,27 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    question_visible = models.BooleanField(default=False)
-    question_open = models.BooleanField(default=False)
+    question_text = models.CharField("Tekst", max_length=200)
+    question_visible = models.BooleanField("Zichtbaar", default=False)
+    question_open = models.BooleanField("Open", default=False)
     
     def __str__(self):
         return self.question_text
+        
+    class Meta:
+        verbose_name = 'Stemming'
+        verbose_name_plural = 'Stemmingen'
     
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+    choice_text = models.CharField("Tekst",max_length=200)
 
     def __str__(self):
         return self.choice_text
+        
+    class Meta:
+        verbose_name = 'Keuze'
+        verbose_name_plural = 'Keuzes'        
 
 class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
