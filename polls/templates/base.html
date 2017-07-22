@@ -23,19 +23,17 @@
     <body>
         <div class="container">
             <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="#">StemApp</a>
-                    </div>
+                <div class="navbar-header pull-left">
+                  <a class="navbar-brand" href="#">StembusApp.nl</a>
                 </div>
-            </nav>
+                <div class="navbar-header pull-right">
+                    {% if user.is_authenticated %}
+                        <a href="/polls/logout" class="btn btn-default navbar-btn" style="margin-right:0.8em;">Uitloggen</a>
+                    {% endif %}                  
+                </div>
+        </nav>
             {% block content %}
             {% endblock %}
-            {% if user.is_authenticated %}
-                        <a href="{% url 'polls:index' %}" class="btn btn-default">Overzicht</a>
-                        <a href="/polls/logout" class="btn btn-default">Uitloggen</a>
-            {% endif %}
         </div>
     </body>
 <html>

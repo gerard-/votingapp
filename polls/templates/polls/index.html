@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <ol class="breadcrumb">
+      <li class="active">Overzicht</li>
+    </ol>
     {% if request.user.is_staff %}
         <p>Ingelogd als organisator</p>
     {% endif %}

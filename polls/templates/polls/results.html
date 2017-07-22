@@ -7,6 +7,16 @@
 {% endblock %}
 
 {% block content %}
+    <ol class="breadcrumb">
+      <li><a href="{% url 'polls:index' %}">Overzicht</a></li>
+        {% if question.question_open %}
+            <li><a href="{% url 'polls:detail' question.id %}">Stemmen</a></li>
+        {% else %}
+            <li>Stemmen</li>
+        {% endif %}
+      <li class="active">Resultaten</li>
+    </ol>            
+
     <p>
         <em>Stemming:</em><br>
         <strong>{{ question.question_text }}</strong>
@@ -15,10 +25,10 @@
     {% if question.question_open %}
         <p>De stemming staat op dit moment open. Nadat deze gesloten is kunt u hier
         de resultaten zien. Deze pagina ververst automatisch.</p>
-        <p>Aantal uitgebrachte stemmen: {{ question.answer_set.count }}</p>
+        <p>Aantal reeds uitgebrachte stemmen: {{ question.answer_set.count }}</p>
         
         {% if not request.user.is_staff %}
-            <p><a href="{% url 'polls:detail' question.id %}">Keuze aanpassen</a></p>
+            <p><a href="{% url 'polls:detail' question.id %}" class="btn btn-warning btn-block">Stem aanpassen</a></p>
         {% endif %}        
     {% else %}
         <p>De stemming is gesloten. Dit zijn de resultaten:</p>
@@ -28,5 +38,7 @@
                 <tr><td>{{ choice.choice_text }}</td><td>{{ choice.answer_set.count }}</td></tr>
             {% endfor %}
         </table>
+        <p>Aantal uitgebrachte stemmen: {{ question.answer_set.count }}</p>
     {% endif %}
+    <p><a href="{% url 'polls:index' %}" class="btn btn-primary btn-block">Terug naar overzicht</a></p>
 {% endblock %}
