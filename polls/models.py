@@ -16,8 +16,8 @@ class Question(models.Model):
         return self.question_text
         
     class Meta:
-        verbose_name = 'Stemming'
-        verbose_name_plural = 'Stemmingen'
+        verbose_name = 'stemming'
+        verbose_name_plural = 'stemmingen'
     
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -27,8 +27,8 @@ class Choice(models.Model):
         return self.choice_text
         
     class Meta:
-        verbose_name = 'Keuze'
-        verbose_name_plural = 'Keuzes'        
+        verbose_name = 'keuze'
+        verbose_name_plural = 'keuzes'        
 
 class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
