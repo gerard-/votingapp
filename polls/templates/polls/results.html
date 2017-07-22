@@ -23,13 +23,30 @@
     </p>
     
     {% if question.question_open %}
+        {% if not request.user.is_staff %}
+            {% if user_voted %}
+                <div class="alert alert-success" role="alert">
+                    <strong>U heeft gestemd.</strong>
+                    <a href="{% url 'polls:detail' question.id %}" class="btn btn-warning">Stem aanpassen</a>
+                </div>
+            {% else %}
+                <div class="alert alert-danger" role="alert"><strong>U niet gestemd.</strong>
+                    <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary">Stemmen</a>
+                </div>
+            {% endif %}
+        {% endif %}        
+
         <p>De stemming staat op dit moment open. Nadat deze gesloten is kunt u hier
         de resultaten zien. Deze pagina ververst automatisch.</p>
-        <p>Aantal reeds uitgebrachte stemmen: {{ question.answer_set.count }}</p>
         
-        {% if not request.user.is_staff %}
-            <p><a href="{% url 'polls:detail' question.id %}" class="btn btn-warning btn-block">Stem aanpassen</a></p>
-        {% endif %}        
+        <p>
+            <table class="table">
+                <tr><th>Keuze</th><th>Stemmen</th></tr>
+                {% for choice in question.choice_set.all %}
+                    <tr><td>{{ choice.choice_text }}</td><td><em>...</em></td></tr>
+                {% endfor %}
+            </table>
+        </p>        
     {% else %}
         <p>De stemming is gesloten. Dit zijn de resultaten:</p>
         <table class="table">
@@ -38,7 +55,7 @@
                 <tr><td>{{ choice.choice_text }}</td><td>{{ choice.answer_set.count }}</td></tr>
             {% endfor %}
         </table>
-        <p>Aantal uitgebrachte stemmen: {{ question.answer_set.count }}</p>
     {% endif %}
+    <p>Aantal uitgebrachte stemmen: {{ question.answer_set.count }}</p>
     <p><a href="{% url 'polls:index' %}" class="btn btn-primary btn-block">Terug naar overzicht</a></p>
 {% endblock %}

@@ -11,7 +11,7 @@
         <h2>Open stemmingen</h2>
         {% for question in question_list %}
             {% if question.question_open %}
-                {% if request.user.is_staff %}
+                {% if request.user.is_staff or question.user_voted %}
                     <a class="btn btn-default btn-block" href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>
                 {% else %}
                     <a class="btn btn-default btn-block" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>

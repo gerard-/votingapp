@@ -21,6 +21,12 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Question.objects.filter(question_visible=True)
+        
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        for question in context['question_list']:
+            question.user_voted = Answer.objects.filter(user=self.request.user,question=question).exists()
+        return context        
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Question
@@ -29,6 +35,10 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 class ResultsView(LoginRequiredMixin, generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+    def get_context_data(self, **kwargs):
+        context = super(ResultsView, self).get_context_data(**kwargs)
+        context['user_voted'] = Answer.objects.filter(user=self.request.user,question=context['question']).exists()
+        return context
 
 @login_required
 def vote(request, question_id):
