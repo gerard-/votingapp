@@ -1,13 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if latest_question_list %}
+    {% if question_list %}
+        <h2>Open stemmingen</h2>
         <ul>
-        {% for question in latest_question_list %}
-            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        {% for question in question_list %}
+            {% if question.question_open %}
+                <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> (u kunt nu stemmen)</li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+        <h2>Gesloten stemmingen</h2>
+        <ul>
+        {% for question in question_list %}
+            {% if not question.question_open %}
+                <li><a href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>  (bekijk resultaten)</li>
+            {% endif %}
         {% endfor %}
         </ul>
     {% else %}
-        <p>No polls are available.</p>
+        <p>Er staan op dit moment geen stemmingen open.</p>
     {% endif %}
 {% endblock %}

@@ -14,10 +14,10 @@ from .models import Question, Answer
 
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
+    context_object_name = 'question_list'
 
     def get_queryset(self):
-        return Question.objects.all() # FIXME
+        return Question.objects.filter(question_visible=True)
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Question
@@ -36,20 +36,25 @@ def vote(request, question_id):
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
             'question': question,
-            'error_message': "You didn't select a choice.",
+            'error_message': "U dient een keuze te maken",
         })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        
-        # Remove previous answer
-        Answer.objects.filter(user=request.user, question=question).delete()
-        
-        # Add the answer
-        a = Answer(user=request.user, question=question, choice=selected_choice)
-        a.save()
+    if not question.question_open:
+        return render(request, 'polls/detail.html', {
+                    'question': question,
+                    'error_message': "De stemming is gesloten",
+                })        
+    
+    selected_choice.votes += 1
+    selected_choice.save()
+    
+    # Remove previous answer
+    Answer.objects.filter(user=request.user, question=question).delete()
+    
+    # Add the answer
+    a = Answer(user=request.user, question=question, choice=selected_choice)
+    a.save()
 
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    # Always return an HttpResponseRedirect after successfully dealing
+    # with POST data. This prevents data from being posted twice if a
+    # user hits the Back button.
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
