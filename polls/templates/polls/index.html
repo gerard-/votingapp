@@ -7,24 +7,26 @@
     {% if request.user.is_staff %}
         <p>Ingelogd als organisator</p>
     {% endif %}
-    {% if question_list %}
-        <h2>Open stemmingen</h2>
-        {% for question in question_list %}
-            {% if question.question_open %}
-                {% if request.user.is_staff or question.user_voted %}
-                    <a class="btn btn-default btn-block" href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>
-                {% else %}
-                    <a class="btn btn-default btn-block" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-        <h2>Gesloten stemmingen</h2>
-        {% for question in question_list %}
-            {% if not question.question_open %}
+    {% if open_not_voted_questions %}
+        <h2>Stemmen</h2>
+        {% for question in open_not_voted_questions %}
+            {% if request.user.is_staff %}
                 <a class="btn btn-default btn-block" href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>
+            {% else %}
+                <a class="btn btn-primary btn-block" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
             {% endif %}
         {% endfor %}
-    {% else %}
-        <p>Er staan op dit moment geen stemmingen open.</p>
+    {% endif %}
+    {% if open_voted_questions %}
+        <h2>Reeds gestemd</h2>
+        {% for question in open_voted_questions %}
+            <a class="btn btn-default btn-block" href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>
+        {% endfor %}
+    {% endif %}
+    {% if closed_questions %}
+    <h2>Gesloten stemmingen</h2>
+        {% for question in closed_questions %}
+            <a class="btn btn-default btn-block" href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>
+        {% endfor %}
     {% endif %}
 {% endblock %}

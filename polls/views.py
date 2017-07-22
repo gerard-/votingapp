@@ -15,6 +15,18 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 from .models import Question, Answer, Choice
 
+@login_required
+def index(request):
+    open_questions = Question.objects.filter(question_visible=True, question_open=True)
+    open_not_voted_questions = open_questions.exclude(answer__user=request.user)
+    open_voted_questions = open_questions.filter(answer__user=request.user)
+    closed_questions = Question.objects.filter(question_visible=True, question_open=False)
+    return render(request, 'polls/index.html', {
+                    'open_not_voted_questions': open_not_voted_questions,
+                    'open_voted_questions': open_voted_questions,
+                    'closed_questions': closed_questions,
+                })
+
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'question_list'
