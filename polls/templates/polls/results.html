@@ -1,13 +1,22 @@
 {% extends "base.html" %}
 
+{% block head %}
+    {% if question.question_open %}
+        <meta http-equiv="refresh" content="10">
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <h1>{{ question.question_text }}</h1>
     
     {% if question.question_open %}
         <p>De stemming staat op dit moment open. Nadat deze gesloten is kunt u hier
-        de resultaten zien.</p>
+        de resultaten zien. Deze pagina ververst automatisch.</p>
         <p>Aantal uitgebrachte stemmen: {{ question.answer_set.count }}</p>
-        <p><a href="{% url 'polls:detail' question.id %}">Keuze aanpassen</a></p>
+        
+        {% if not request.user.is_staff %}
+            <p><a href="{% url 'polls:detail' question.id %}">Keuze aanpassen</a></p>
+        {% endif %}        
     {% else %}
         <p>De stemming is gesloten. Dit zijn de resultaten:</p>
         <ul>

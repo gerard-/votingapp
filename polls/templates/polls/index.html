@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% if request.user.is_staff %}
+        <p>Ingelogd als organisator</p>
+    {% endif %}
     {% if question_list %}
         <h2>Open stemmingen</h2>
         <ul>
         {% for question in question_list %}
             {% if question.question_open %}
-                <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> (u kunt nu stemmen)</li>
+                {% if request.user.is_staff %}
+                    <li><a href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>  (statuspagina)</li>
+                {% else %}
+                    <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> (u kunt nu stemmen)</li>
+                {% endif %}
             {% endif %}
         {% endfor %}
         </ul>

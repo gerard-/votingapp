@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
-from .models import Question, Answer
+from .models import Question, Answer, Choice
 
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'polls/index.html'
@@ -42,7 +42,12 @@ def vote(request, question_id):
         return render(request, 'polls/detail.html', {
                     'question': question,
                     'error_message': "De stemming is gesloten",
-                })        
+                })
+    if request.user.is_staff:
+        return render(request, 'polls/detail.html', {
+                    'question': question,
+                    'error_message': "Organisatoren mogen niet stemmen",
+                })
     
     selected_choice.votes += 1
     selected_choice.save()

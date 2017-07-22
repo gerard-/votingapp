@@ -1,10 +1,10 @@
 TODO
-- Kopieren van questions (zodat er makkelijk mensen kunnen afvallen)
 - Genereren van gebruikers
-- Zorgen dat alleen echte kiezers kunnen stemmen
 - Gelikte skin voor de interface
 - Testen op mobiele telefoon
 
 DONE
 - Openen en sluiten van questions
 - Zorgen dat iedereen maar 1x kan stemmen
+- Kopieren van questions (zodat er makkelijk mensen kunnen afvallen)
+- Zorgen dat alleen echte kiezers kunnen stemmen
