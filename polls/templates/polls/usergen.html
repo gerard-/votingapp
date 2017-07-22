@@ -3,11 +3,13 @@
 {% block content %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-    <p>Gebruikers aanmaken</p>
+    <h2>Nieuwe gebruikers aanmaken</h2>
+    <p>U kunt hier gebruikers aanmaken. Deze krijgen een nummer als gebruikersnaam.
+    Op de resultaatpagina kunt u de lijst met gebruikersnamen en wachtwoorden bekijken.</p>
     <form action="{% url 'polls:usergen_generate' %}" method="post">
     {% csrf_token %}
-    <input type="text" name="count" id="count" value="" />
-    <label for="count">aantal</label><br />
-    <input type="submit" value="Aanmaken" />
+    <input class="form-control" type="text" name="count" id="count" value="" placeholder="Aantal" />
+    <label class="sr-only" for="count">aantal</label><br />
+    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Aanmaken" />
     </form>
 {% endblock %}

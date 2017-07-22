@@ -1,18 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p>U stemt over:<br>
-    <strong>{{ question.question_text }}</strong></p>
+    <p>
+        <em>Stemming:</em><br>
+        <strong>{{ question.question_text }}</strong>
+    </p>
 
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-    Maak uw keuze:
-    <form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %}
-    {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-    {% endfor %}
-    <input type="submit" value="Stem" />
+    <em>Maak uw keuze:</em>
+    <form action="{% url 'polls:vote' question.id %}" method="post" class="form">
+        {% csrf_token %}
+        <div class="btn-group" data-toggle="buttons" style="width:100%;">
+            {% for choice in question.choice_set.all %}
+                <label class="btn btn-choice btn-block">
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"  data-toggle="button">
+                    {{ choice.choice_text }}
+                </label>
+            {% endfor %}
+        </div>
+        <input type="submit" value="Stem uitbrengen" class="btn btn-lg btn-danger btn-block" style="margin-top:1em;"/>
     </form>
 {% endblock %}

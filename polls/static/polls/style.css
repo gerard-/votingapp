@@ -1,3 +1,86 @@
-li a {
-    color: green;
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* van http://blog.koalite.com/bbg/ */
+.btn-choice { 
+  color: #000000; 
+  background-color: #FFFFFF; 
+  border-color: #B8B8B8; 
+} 
+ 
+.btn-choice:focus, 
+.btn-choice:active, 
+.btn-choice.active, 
+.open .dropdown-toggle.btn-choice { 
+  color: #000000; 
+  background-color: #83CC62; 
+  border-color: #B8B8B8; 
+} 
+ 
+.btn-choice:active, 
+.btn-choice.active, 
+.open .dropdown-toggle.btn-choice { 
+  background-image: none; 
+} 
+ 
+.btn-choice.disabled, 
+.btn-choice[disabled], 
+fieldset[disabled] .btn-choice, 
+.btn-choice.disabled:hover, 
+.btn-choice[disabled]:hover, 
+fieldset[disabled] .btn-choice:hover, 
+.btn-choice.disabled:focus, 
+.btn-choice[disabled]:focus, 
+fieldset[disabled] .btn-choice:focus, 
+.btn-choice.disabled:active, 
+.btn-choice[disabled]:active, 
+fieldset[disabled] .btn-choice:active, 
+.btn-choice.disabled.active, 
+.btn-choice[disabled].active, 
+fieldset[disabled] .btn-choice.active { 
+  background-color: #FFFFFF; 
+  border-color: #B8B8B8; 
+} 
+ 
+.btn-choice .badge { 
+  color: #FFFFFF; 
+  background-color: #000000; 
 }

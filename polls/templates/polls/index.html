@@ -6,25 +6,21 @@
     {% endif %}
     {% if question_list %}
         <h2>Open stemmingen</h2>
-        <ul>
         {% for question in question_list %}
             {% if question.question_open %}
                 {% if request.user.is_staff %}
-                    <li><a href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>  (statuspagina)</li>
+                    <a class="btn btn-default btn-block" href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>
                 {% else %}
-                    <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> (u kunt nu stemmen)</li>
+                    <a class="btn btn-default btn-block" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
                 {% endif %}
             {% endif %}
         {% endfor %}
-        </ul>
         <h2>Gesloten stemmingen</h2>
-        <ul>
         {% for question in question_list %}
             {% if not question.question_open %}
-                <li><a href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>  (bekijk resultaten)</li>
+                <a class="btn btn-default btn-block" href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>
             {% endif %}
         {% endfor %}
-        </ul>
     {% else %}
         <p>Er staan op dit moment geen stemmingen open.</p>
     {% endif %}
