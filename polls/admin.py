@@ -30,7 +30,6 @@ class MyUserAdmin(UserAdmin):
     list_display = ['username', 'is_staff', 'is_superuser']
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Answer)
 
 admin.site.unregister(Group)
 admin.site.unregister(User)
