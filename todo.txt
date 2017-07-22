@@ -1,5 +1,7 @@
 TODO
-- Openen en sluiten van questions
 - Kopieren van questions (zodat er makkelijk mensen kunnen afvallen)
 - Login systeem met genereren van gebruikers
+
+DONE
+- Openen en sluiten van questions
 - Zorgen dat iedereen maar 1x kan stemmen
