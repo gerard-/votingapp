@@ -1,6 +1,4 @@
 body {
-  padding-top: 40px;
-  padding-bottom: 40px;
   background-color: #eee;
 }
 
@@ -8,6 +6,7 @@ body {
   margin-right: auto;
   margin-left: auto;
   max-width: 500px;
+  margin-bottom: 30px;
 }
 
 .form-signin {
@@ -89,4 +88,16 @@ fieldset[disabled] .btn-choice.active {
 .btn-choice .badge { 
   color: #FFFFFF; 
   background-color: #000000; 
+}
+
+.navbar {
+    margin-bottom: 5px;
+}
+
+.breadcrumb {
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-top: 10px;
 }

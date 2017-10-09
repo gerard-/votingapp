@@ -117,18 +117,18 @@ def usergen_generate(request):
                     'error_message': "U bent geen admin",
                 })
     # See what the highest "voter id" is
-    highest = None
+    highest = 0
     for user in User.objects.all():
         try:
             value = int(user.username)
-            if highest == None or value > highest:
+            if value > highest:
                 highest = value
         except (ValueError):
             pass
             
     count=int(request.POST['count'])
     result = []
-    for i in xrange(highest+1, highest+1+count):
+    for i in range(highest+1, highest+1+count):
         username=str(i)
         password = User.objects.make_random_password(length=12, allowed_chars="0123456789")
         u = User.objects.create_user(username=username, password=password)

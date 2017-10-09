@@ -2,7 +2,9 @@
 
 {% block head %}
     {% if question.question_open %}
-        <meta http-equiv="refresh" content="10">
+        <script>
+            setTimeout(function(){ window.location = window.location; }, 10000);
+        </script>
     {% endif %}
 {% endblock %}
 
