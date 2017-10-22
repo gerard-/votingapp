@@ -16,7 +16,7 @@ from django.contrib.auth.models import User
 from .models import Question, Answer, Choice
 
 def sort_by_number(x):
-    s = filter(unicode.isdigit, x.question_text.split('.')[0])
+    s = ''.join(i for i in x.question_text.split('.')[0] if i.isdigit())
     return int(s) if s else 999999
 
 @login_required
