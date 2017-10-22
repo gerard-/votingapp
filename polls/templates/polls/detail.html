@@ -7,7 +7,7 @@
     </ol>            
 
     <p>
-        <em>Stemming:</em><br>
+        <em>Amendement:</em><br>
         <strong>{{ question.question_text }}</strong>
     </p>
 
@@ -28,10 +28,10 @@
     <em>Maak uw keuze:</em>
     <form action="{% url 'polls:vote' question.id %}" method="post" class="form">
         {% csrf_token %}
-        <div class="btn-group" data-toggle="buttons" style="width:100%;">
+        <div style="width:100%;font-size:150%;">
             {% for choice in question.choice_set.all %}
-                <label class="btn btn-choice btn-block">
-                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"  data-toggle="button">
+                <label class="btn btn-default btn-block">
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
                     {{ choice.choice_text }}
                 </label>
             {% endfor %}
