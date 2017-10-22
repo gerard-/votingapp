@@ -15,14 +15,18 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 from .models import Question, Answer, Choice
 
+def sort_by_number(x):
+    s = filter(unicode.isdigit, x.question_text.split('.')[0])
+    return int(s) if s else 999999
+
 @login_required
 def index(request):
     open_questions = Question.objects.filter(question_visible=True, question_open=True)
-    open_not_voted_questions = open_questions.exclude(answer__user=request.user)
-    open_voted_questions = open_questions.filter(answer__user=request.user)
-    closed_questions = Question.objects.filter(question_visible=True, question_open=False)
+    open_not_voted_questions = sorted(open_questions.exclude(answer__user=request.user), key=sort_by_number)
+    open_voted_questions = sorted(open_questions.filter(answer__user=request.user), key=sort_by_number)
+    closed_questions = sorted(Question.objects.filter(question_visible=True, question_open=False), key=sort_by_number)
     if request.user.is_staff:
-        hidden_questions = Question.objects.filter(question_visible=False)
+        hidden_questions = sorted(Question.objects.filter(question_visible=False), key=sort_by_number)
     else:
         hidden_questions = []
     return render(request, 'polls/index.html', {
