@@ -46,4 +46,10 @@
             <a class="btn btn-default btn-block" href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>
         {% endfor %}
     {% endif %}
+    {% if hidden_questions %}
+    <h2>Onzichtbare stemmingen</h2>
+        {% for question in hidden_questions %}
+            <a class="btn btn-default btn-block" href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

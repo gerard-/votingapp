@@ -9,6 +9,22 @@
 {% endblock %}
 
 {% block content %}
+    {% if request.user.is_staff %}
+        <head>
+            <style>
+.container {
+  max-width: 100%;
+  width: 100%;
+  font-size: 300%;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+.breadcrumb {
+    font-size: 33%;
+}
+            </style>
+        </head>
+    {% endif %}
     <ol class="breadcrumb">
       <li><a href="{% url 'polls:index' %}">Overzicht</a></li>
         {% if question.question_open and not request.user.is_staff %}
@@ -20,10 +36,31 @@
     </ol>            
 
     <p>
-        <em>Stemming:</em><br>
         <strong>{{ question.question_text }}</strong>
+        {% if request.user.is_staff %}
+            - Categorie {{ question.question_category }},
+
+            Advies:
+            {% if question.question_advice == 'negative' %}
+                Niet overnemen
+            {% endif %}
+            {% if question.question_advice == 'neutral' %}
+                Neutraal
+            {% endif %}
+            {% if question.question_advice == 'positive' %}
+                Positief
+            {% endif %}        
+        {% endif %}        
     </p>
-    
+    {% if request.user.is_staff %}
+        <p>
+            <strong>{{ question.question_change }}</strong>
+        </p>    
+        <p>
+            <small><em>Indieners:</em>
+            {{ question.question_people }}</small>
+        </p>    
+    {% endif %}
     {% if question.question_open %}
         {% if not request.user.is_staff %}
             {% if user_voted %}
@@ -70,4 +107,16 @@
     {% endif %}
     <p>Aantal uitgebrachte stemmen: {{ question.answer_set.count }}</p>
     <p><a href="{% url 'polls:index' %}" class="btn btn-primary btn-block">Terug naar overzicht</a></p>
+    {% if request.user.is_staff and question.question_open%}
+        <a href="{% url 'polls:close' question.id %}" class="btn btn-default btn-block">Sluit de stemming</a>
+    {% endif %}
+    {% if request.user.is_staff and not question.question_open%}
+        <a href="{% url 'polls:open' question.id %}" class="btn btn-default btn-block">Open de stemming</a>
+    {% endif %}
+    {% if request.user.is_staff and not question.question_open%}
+        <a href="{% url 'polls:hide' question.id %}" class="btn btn-default btn-block">Verberg de stemming</a>
+    {% endif %}
+    {% if request.user.is_staff and not question.question_open%}
+        <a href="{% url 'polls:reset' question.id %}" class="btn btn-default btn-block">Reset de stemming</a>
+    {% endif %}
 {% endblock %}

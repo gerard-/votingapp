@@ -101,3 +101,5 @@ fieldset[disabled] .btn-choice.active {
 h2 {
     margin-top: 10px;
 }
+
+input[type='radio'] { transform: scale(1.5); }

@@ -21,10 +21,15 @@ def index(request):
     open_not_voted_questions = open_questions.exclude(answer__user=request.user)
     open_voted_questions = open_questions.filter(answer__user=request.user)
     closed_questions = Question.objects.filter(question_visible=True, question_open=False)
+    if request.user.is_staff:
+        hidden_questions = Question.objects.filter(question_visible=False)
+    else:
+        hidden_questions = []
     return render(request, 'polls/index.html', {
                     'open_not_voted_questions': open_not_voted_questions,
                     'open_voted_questions': open_voted_questions,
                     'closed_questions': closed_questions,
+                    'hidden_questions': hidden_questions,
                 })
 
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -109,6 +114,62 @@ def usergen(request):
                     'error_message': "U bent geen admin",
                 })
     return render(request, 'polls/usergen.html')
+    
+@login_required
+def open(request, question_id):
+    if not request.user.is_superuser:
+        return render(request, 'polls/results.html', {
+                    'error_message': "U bent geen admin",
+                })
+    question = get_object_or_404(Question, pk=question_id)
+    question.question_open = True
+    question.question_visible = True
+    question.save()
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    
+@login_required
+def close(request, question_id):
+    if not request.user.is_superuser:
+        return render(request, 'polls/results.html', {
+                    'error_message': "U bent geen admin",
+                })
+    question = get_object_or_404(Question, pk=question_id)
+    question.question_open = False
+    question.save()
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    
+@login_required
+def show(request, question_id):
+    if not request.user.is_superuser:
+        return render(request, 'polls/results.html', {
+                    'error_message': "U bent geen admin",
+                })
+    question = get_object_or_404(Question, pk=question_id)
+    question.question_visible = True
+    question.save()
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    
+@login_required
+def hide(request, question_id):
+    if not request.user.is_superuser:
+        return render(request, 'polls/results.html', {
+                    'error_message': "U bent geen admin",
+                })
+    question = get_object_or_404(Question, pk=question_id)
+    question.question_visible = False
+    question.question_open = False
+    question.save()
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+@login_required
+def reset(request, question_id):
+    if not request.user.is_superuser:
+        return render(request, 'polls/results.html', {
+                    'error_message': "U bent geen admin",
+                })
+    question = get_object_or_404(Question, pk=question_id)
+    Answer.objects.filter(question=question).delete()
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 @login_required
 def usergen_generate(request):

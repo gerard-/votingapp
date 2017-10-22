@@ -8,7 +8,18 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 class Question(models.Model):
-    question_text = models.CharField("Tekst", max_length=2000)
+    ADVICE = (
+        ('positive', 'Overnemen'),
+        ('neutral', 'Neutraal'),
+        ('negative', 'Niet overnemen'),
+    )
+        
+    question_text = models.CharField("Titel", max_length=2000)
+    question_change = models.CharField("Wijziging", max_length=4000, default="")
+    question_people = models.CharField("Indieners", max_length=4000, default="")
+    question_category = models.IntegerField("Category", default=2, choices=((1,'1'),(2,'2'),(3,'3')))
+    question_advice = models.CharField("Advies Programmacommissie", choices=ADVICE, max_length=4000, default="neutral")
+
     question_visible = models.BooleanField("Zichtbaar", default=False)
     question_open = models.BooleanField("Open", default=False)
     

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User, Group
+from django import forms
 
 from .models import Question, Choice, Answer
 
@@ -26,6 +27,14 @@ class QuestionAdmin(admin.ModelAdmin):
     ]
     actions = [copy_question]
     list_display = ['question_text', 'question_visible', 'question_open']
+    
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        formfield = super(QuestionAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name in ['question_change','question_explanation','question_advice_explanation', 'question_people']:
+            formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
+        return formfield    
+    
+
     
 class MyUserAdmin(UserAdmin):    
     list_display = ['username', 'is_staff', 'is_superuser']
