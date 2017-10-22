@@ -7,9 +7,25 @@
         <h2 class="form-signin-heading">Inloggen</h2>
         {% csrf_token %}
         <label class="sr-only" for="id_username">Username:</label>
-        <input class="form-control" type="text" name="username" autofocus required id="id_username" maxlength="254" placeholder="Gebruikersnaam" />
+        <input class="form-control" type="text" name="username" autofocus required id="id_username" maxlength="254" placeholder="Gebruikerscode" />
         <label class="sr-only" for="id_password">Password:</label>
-        <input class="form-control" type="password" name="password" required id="id_password" placeholder="Wachtwoord" />
+        <input class="form-control" type="text" name="password" required id="id_password" placeholder="Logincode" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
     </form>
+<script type="text/javascript">
+var u = document.getElementById('id_username');
+u.onkeypress = u.onpaste = checkInput;
+var p = document.getElementById('id_password');
+p.onkeypress = p.onpaste = checkInput;
+
+function checkInput(e) {
+    var e = e || event;
+    var char = e.type == 'keypress' 
+        ? String.fromCharCode(e.keyCode || e.which) 
+        : (e.clipboardData || window.clipboardData).getData('Text');
+    if (/[^\d]/gi.test(char)) {
+        return false;
+    }
+}
+</script>
 {% endblock %}
