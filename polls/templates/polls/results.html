@@ -47,13 +47,13 @@
 
             Advies:
             {% if question.question_advice == 'negative' %}
-                Niet overnemen
+                <span style="color:darkred;">Niet overnemen</span>
             {% endif %}
             {% if question.question_advice == 'neutral' %}
                 Neutraal
             {% endif %}
             {% if question.question_advice == 'positive' %}
-                Positief
+                <span style="color:green;">Overnemen</span>
             {% endif %}        
             {% if question.question_advice == 'na' %}
                 NVT - bestuursamendement
@@ -61,12 +61,12 @@
         {% endif %}        
     </p>
     {% if request.user.is_staff %}
-        <p>
-            <strong>{{ question.question_change }}</strong>
+        <p style="background: white;padding:0.4em;">
+            {{ question.question_change }}
         </p>    
         <p>
-            <small><em>Indieners:</em>
-            {{ question.question_people }}</small>
+            <span style="font-size:70%;"><em>Indieners:</em>
+            {{ question.question_people }}</span>
         </p>    
     {% endif %}
     {% if question.question_open %}
