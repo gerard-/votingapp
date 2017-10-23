@@ -11,9 +11,10 @@ class Question(models.Model):
     ADVICE = (
         ('positive', 'Overnemen'),
         ('neutral', 'Neutraal'),
+        ('na', 'NVT - bestuursamendement'),
         ('negative', 'Niet overnemen'),
     )
-        
+
     question_text = models.CharField("Titel", max_length=2000)
     question_change = models.CharField("Wijziging", max_length=4000, default="")
     question_people = models.CharField("Indieners", max_length=4000, default="")
