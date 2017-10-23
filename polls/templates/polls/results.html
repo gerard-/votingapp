@@ -62,7 +62,7 @@
     </p>
     {% if request.user.is_staff %}
         <p style="background: white;padding:0.4em;">
-            {{ question.question_change }}
+            {{ question.question_change|linebreaksbr }}
         </p>    
         <p>
             <span style="font-size:70%;"><em>Indieners:</em>
