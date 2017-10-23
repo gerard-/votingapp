@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
 {% block head %}
-        <script>
-            setTimeout(function(){ window.location = window.location; }, 10000);
-        </script>
+        {% if not request.user.is_staff %}
+            <script>
+                setTimeout(function(){ window.location = window.location; }, 10000);
+            </script>
+        {% endif %}
 {% endblock %}
 
 {% block content %}
