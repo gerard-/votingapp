@@ -174,7 +174,6 @@ def next(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     qs = sorted(Question.objects.all(), key=sort_by_number)
     for i in xrange(0, len(qs)):
-        print qs[i].id, question_id
         if str(qs[i].id) == str(question_id) and i+1 < len(qs):
             return HttpResponseRedirect(reverse('polls:results', args=(qs[i+1].id,)))
     return HttpResponseRedirect(reverse('polls:index'))
@@ -188,7 +187,6 @@ def prev(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     qs = sorted(Question.objects.all(), key=sort_by_number)
     for i in xrange(0, len(qs)):
-        print qs[i].id, question_id
         if str(qs[i].id) == str(question_id) and i-1 > 0:
             return HttpResponseRedirect(reverse('polls:results', args=(qs[i-1].id,)))
     return HttpResponseRedirect(reverse('polls:index'))
