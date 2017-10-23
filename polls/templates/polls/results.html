@@ -36,7 +36,7 @@
     </ol>            
     
     {% if request.user.is_staff %}
-        <p><a href="{% url 'polls:prev' question.id %}" class="btn btn-default">Vorige</a>
+        <p style="float:right;"><a href="{% url 'polls:prev' question.id %}" class="btn btn-default">Vorige</a>
         <a href="{% url 'polls:next' question.id %}" class="btn btn-default">Volgende</a></p>
     {% endif %}
 
