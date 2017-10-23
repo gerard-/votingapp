@@ -50,6 +50,9 @@
             {% if question.question_advice == 'positive' %}
                 Positief
             {% endif %}        
+            {% if question.question_advice == 'na' %}
+                NVT - bestuursamendement
+            {% endif %}        
         {% endif %}        
     </p>
     {% if request.user.is_staff %}
@@ -98,7 +101,6 @@
                 </div>
             {% endif %}
         {% endif %}      
-        <p>De stemming is gesloten. Dit zijn de resultaten:</p>
         <table class="table">
             <tr><th>Keuze</th><th>Stemmen</th></tr>
             {% for choice in question.choice_set.all %}

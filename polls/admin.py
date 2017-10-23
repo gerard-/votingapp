@@ -25,7 +25,7 @@ copy_question.short_description = "Kopieer stemmingen"
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['question_text', 'question_change', 'question_people', 'question_visible', 'question_open']
+        fields = ['question_text', 'question_change', 'question_people', 'question_category', 'question_advice', 'question_visible', 'question_open']
 
     def save(self, commit=True):
         q = super(QuestionForm, self).save(commit=commit)
