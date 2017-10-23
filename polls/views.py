@@ -17,7 +17,7 @@ from .models import Question, Answer, Choice
 
 def sort_by_number(x):
     s = ''.join(i for i in x.question_text.split('.')[0] if i.isdigit())
-    return ('0' * (3-len(s))) + x
+    return ('0' * (3-len(s))) + x.question_text
 
 @login_required
 def index(request):
