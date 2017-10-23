@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^(?P<question_id>[0-9]+)/show/$', views.show, name='show'),
     url(r'^(?P<question_id>[0-9]+)/hide/$', views.hide, name='hide'),
     url(r'^(?P<question_id>[0-9]+)/reset/$', views.reset, name='reset'),
+    url(r'^(?P<question_id>[0-9]+)/next/$', views.next, name='next'),
+    url(r'^(?P<question_id>[0-9]+)/prev/$', views.prev, name='prev'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/polls/login'}, name='logout'),
 

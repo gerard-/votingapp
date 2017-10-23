@@ -34,6 +34,11 @@
         {% endif %}
       <li class="active">Resultaten</li>
     </ol>            
+    
+    {% if request.user.is_staff %}
+        <p><a href="{% url 'polls:prev' question.id %}" class="btn btn-default">Vorige</a>
+        <a href="{% url 'polls:next' question.id %}" class="btn btn-default">Volgende</a></p>
+    {% endif %}
 
     <p>
         <strong>{{ question.question_text }}</strong>
@@ -111,15 +116,15 @@
     <p>Aantal uitgebrachte stemmen: {{ question.answer_set.count }}</p>
     <p><a href="{% url 'polls:index' %}" class="btn btn-primary btn-block">Terug naar overzicht</a></p>
     {% if request.user.is_staff and question.question_open%}
-        <a href="{% url 'polls:close' question.id %}" class="btn btn-default btn-block">Sluit de stemming</a>
+        <p><a href="{% url 'polls:close' question.id %}" class="btn btn-default btn-block">Sluit de stemming</a></p>
     {% endif %}
     {% if request.user.is_staff and not question.question_open%}
-        <a href="{% url 'polls:open' question.id %}" class="btn btn-default btn-block">Open de stemming</a>
+        <p><a href="{% url 'polls:open' question.id %}" class="btn btn-default btn-block">Open de stemming</a></p>
     {% endif %}
     {% if request.user.is_staff and not question.question_open%}
-        <a href="{% url 'polls:hide' question.id %}" class="btn btn-default btn-block">Verberg de stemming</a>
+        <p><a href="{% url 'polls:hide' question.id %}" class="btn btn-default btn-block">Verberg de stemming</a></p>
     {% endif %}
     {% if request.user.is_staff and not question.question_open%}
-        <a href="{% url 'polls:reset' question.id %}" class="btn btn-default btn-block">Reset de stemming</a>
+        <p><a href="{% url 'polls:reset' question.id %}" class="btn btn-default btn-block">Reset de stemming</a></p>
     {% endif %}
 {% endblock %}
